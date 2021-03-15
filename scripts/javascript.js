@@ -3,7 +3,7 @@ const gScreen = document.querySelector("#screen");
 
 const gridSize = document.querySelector("#gridSize");
 
-let gridNumber = 4;
+let gridNumber = 8;
 
 createGrid();
 const squares = document.querySelectorAll(".test");
@@ -21,15 +21,15 @@ function newGrid() {
         createGrid();
         const squares = document.querySelectorAll(".test");
         squares.forEach(changeBackgroundOnHover());
+
     };
 }
 function changeBackgroundOnHover() {
     return square => {
         square.addEventListener("mouseover", e => { //generates and applies a random generated background
-            const color = `hsl(${randomNumberHSL()},100%,${90 - (e.target.textContent * 10)}%)`;
+            const color = `hsl(${randomNumberHSL()},100%,${90 - (e.target.value * 10)}%)`;
             e.target.style.backgroundColor = color;
-            if (e.target.textContent < 10) e.target.textContent++;
-
+            e.target.value++;
         });
     };
 }
@@ -37,6 +37,7 @@ function createGrid() {
     for (let i = 0; i < gridNumber ** 2; i++) {
         const block = document.createElement("div");
         block.classList.add("test");
+        block.value = "0";
         gScreen.appendChild(block);
     }
 }
