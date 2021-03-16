@@ -7,7 +7,7 @@
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   min-height: 720px;
   min-width: 1170px;
-  background: url("../img/background.jpg");
+  background: url("../img/background.png");
   background-size: cover;
 }
 #creator {
