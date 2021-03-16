@@ -74,10 +74,9 @@ body {
   padding: 1px;
   transition: background-color 1s;
 }
-.test {
+.tiles {
   margin: 0;
   padding: 0;
-  
 }
 
 #div-reset {
@@ -178,6 +177,5 @@ body {
   transition: background-color 0.5s;
 }
 #screen.background {
-
   background-color: black;
 }
