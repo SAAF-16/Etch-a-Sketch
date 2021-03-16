@@ -55,6 +55,7 @@ bReset.addEventListener("click", () => {
 
 bReset.addEventListener("animationend", () => {
     bReset.classList.remove("resetBtnAnim");
+    const squares = document.querySelectorAll(".tiles");
     squares.forEach((square) => {
         square.classList.remove("transition");
     });
