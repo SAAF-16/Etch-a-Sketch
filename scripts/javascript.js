@@ -32,6 +32,12 @@ bReset.addEventListener("click", resetGrid());
 bReset.addEventListener("animationend", endAnimation())
 /////////////////////////////////////////////////////////////////////
 
+////////////////////////  MOBILE SUPPORT   //////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////
+
 ///////////////// FUNCTIONS ///////////////////////////////////////////
 function delayedNewGrid() {
     return () => {
@@ -107,8 +113,23 @@ function createGrid() {
         const block = document.createElement("div");
         block.classList.add("tiles");
         block.value = "0";
-        block.addEventListener("mouseover", changeBackgroundColor(block));   
-        gScreen.appendChild(block);   
+        block.addEventListener("mouseover", changeBackgroundColor(block));
+/*         block.addEventListener("touchmove" , (e)=>{
+        
+        let touch = e.touches[0];
+        let focus = document.elementFromPoint(touch.clientX, touch.clientY).querySelector("#screen");
+        
+              focus.style.backgroundColor = `hsl(${randomNumberHSL()},${saturation}%,${90 - (block.value * 10)}%)`;
+        }); */
+        gScreen.addEventListener("touchstart", function(e) {
+            if (e.touches.length == 1) {
+                e.preventDefault();
+            }
+          });
+        
+        
+        gScreen.appendChild(block);
+         
     }
     squares = document.querySelectorAll(".tiles");
 }
