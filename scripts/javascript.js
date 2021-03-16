@@ -1,95 +1,134 @@
 let gridNumber = 8; //inizial grid size
 let timeout;
 let saturation = 100;
+let color = false;
+let squares;
 
 const gScreen = document.querySelector("#screen");
 
-const gridSize = document.querySelector("#gridSize");
-
 createGrid();
-const squares = document.querySelectorAll(".tiles");
-squares.forEach(changeBackgroundOnHover());
 
-gridSize.addEventListener("input", () => {
-    clearTimeout(timeout);
-    timeout = setTimeout(newGrid(), 500);
-}); //creates a new grid if the input changes, ( adding a delay to avoid useless operations while changing value)
+const gridSize = document.querySelector("#gridSize");
+gridSize.addEventListener("input", delayedNewGrid()); //creates a new grid if the input changes, ( adding a delay to avoid useless operations while changing value)
 
 /////////// settings buttons listeners //////////////////////////
 const bColor = document.querySelector("#bColor");
-bColor.addEventListener("click", () => {
-    saturation == 100 ? saturation = 0 : saturation = 100;
-})
+bColor.addEventListener("click", toggleSaturation());
+
+const bChoseColor = document.querySelector("#bChoseColor");
+bChoseColor.addEventListener("click", activateSingleColorMode());
 
 const bGrid = document.querySelector("#bGrid");
-bGrid.addEventListener("click", () => {
-    const squares = document.querySelectorAll(".tiles");
-    squares.forEach((square) => {
-        square.classList.toggle("grid")
-    })
-})
+bGrid.addEventListener("click", toggleGrid());
 
 const bTransition = document.querySelector("#bTransition");
-bTransition.addEventListener("click", () => {
-    const squares = document.querySelectorAll(".tiles");
-    squares.forEach((square) => {
-        square.classList.toggle("transition");
-    })
-})
+bTransition.addEventListener("click", toggleTransition())
 
 const bBackground = document.querySelector("#bBackground");
-bBackground.addEventListener("click", () => {
-    gScreen.classList.toggle("background");
-})
+bBackground.addEventListener("click", toggleBackground());
 
 const bReset = document.querySelector("#bReset");
-bReset.addEventListener("click", () => {
-    bReset.classList.toggle("resetBtnAnim")
-    const squares = document.querySelectorAll(".tiles");
-    squares.forEach((square) => {
-        square.value = 0;
-        square.style.backgroundColor = null;
-        square.classList.add("transition");
-    });
-});
+bReset.addEventListener("click", resetGrid());
+bReset.addEventListener("animationend", endAnimation())
+/////////////////////////////////////////////////////////////////////
 
-bReset.addEventListener("animationend", () => {
-    bReset.classList.remove("resetBtnAnim");
-    const squares = document.querySelectorAll(".tiles");
-    squares.forEach((square) => {
-        square.classList.remove("transition");
-    });
-})
+///////////////// FUNCTIONS ///////////////////////////////////////////
+function delayedNewGrid() {
+    return () => {
+        clearTimeout(timeout);
+        timeout = setTimeout(newGrid(), 100);
+    };
+}
 
+function endAnimation() {
+    return () => {
+        bReset.classList.remove("resetBtnAnim");
 
+        squares.forEach((square) => {
+            square.classList.remove("transition");
+        });
+    };
+}
 
-function newGrid() {                    //think about how to avoid multiple calls if value is
+function resetGrid() {
+    return () => {
+        bReset.classList.toggle("resetBtnAnim");
+        /*     const squares = document.querySelectorAll(".tiles");*/
+        squares.forEach((square) => {
+            square.value = 0;
+            square.style.backgroundColor = null;
+            square.classList.add("transition");
+        });
+    };
+}
+
+function toggleTransition() {
+    return () => {
+
+        squares.forEach((square) => {
+            square.classList.toggle("transition");
+        });
+    };
+}
+
+function toggleGrid() {
+    return () => {
+
+        squares.forEach((square) => {
+            square.classList.toggle("grid");
+        });
+    };
+}
+
+function activateSingleColorMode() {
+    return () => {
+        color = true;
+    };
+}
+
+function toggleSaturation() {
+    return () => {
+        color = false;
+        saturation == 100 ? saturation = 0 : saturation = 100;
+    };
+}
+
+function newGrid() {                  
     return () => {
         gScreen.innerHTML = "";
         gridNumber = gridSize.value;
         gScreen.style.setProperty("--gridValue", gridNumber);
         createGrid();
-        const squares = document.querySelectorAll(".tiles");
-        squares.forEach(changeBackgroundOnHover());
     };
 }
-function changeBackgroundOnHover() {
-    return square => {
-        square.addEventListener("mouseover", e => { //generates and applies a random generated background
-            const color = `hsl(${randomNumberHSL()},${saturation}%,${90 - (e.target.value * 10)}%)`;
-            e.target.style.backgroundColor = color;
-            e.target.value++;
-        });
-    };
-}
+
 function createGrid() {
     for (let i = 0; i < gridNumber ** 2; i++) {
         const block = document.createElement("div");
         block.classList.add("tiles");
         block.value = "0";
-        gScreen.appendChild(block);
+        block.addEventListener("mouseover", changeBackgroundColor(block));   
+        gScreen.appendChild(block);   
     }
+    squares = document.querySelectorAll(".tiles");
 }
+
+function toggleBackground() {
+    return () => {
+        gScreen.classList.toggle("background");
+    };
+}
+
+function changeBackgroundColor(block) {
+    return () => {
+        if (!color) {
+            colors = `hsl(${randomNumberHSL()},${saturation}%,${90 - (block.value * 10)}%)`;
+        } else { colors = bChoseColor.value; }
+        block.style.backgroundColor = colors;
+        block.value++;
+    };
+}
+
 function randomNumberHSL() {
     return Math.floor(Math.random() * 360);
 }

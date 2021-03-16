@@ -28,9 +28,10 @@
                 <p>SETTINGS</p>
             </div>
             <div id="optionsSettings">
-                <label for="gridSize">Grid Size</label><input id="gridSize" type="number" min="2" max="100" value="8"
-                    step="1" onkeydown="return false"></input>
-                <label for="bColor">Color</label><button id="bColor"></button>
+                <label for="gridSize">Grid Size</label><input id="gridSize" type="number" maxlength="2" min="2" max="100" value="8"
+                    step="1" oninput="if(this.value>100)this.value=100"></input>
+                <label for="bColor">Grey/RGB</label><button id="bColor"></button>
+                <label for="bColor">Color</label><button ><input id="bChoseColor" type="color"></button>
                 <label for="bGrid">Grid</label><button id="bGrid"></button>
                 <label for="bTransition">Transition</label><button id="bTransition"></button>
                 <label for="bBackground">Background</label><button id="bBackground"></button>

@@ -123,16 +123,35 @@ body {
   border-radius: 5px;
 }
 #optionsSettings button {
+  background-color: white;
+  position:relative;
   border-radius: 50%;
   height: 14%;
   flex: 15%;
   outline: 0;
+}
+#optionsSettings button:active::before {
+  background-color: white;
+
+}
+#optionsSettings button:active::after {
+  background-color: black;
+
 }
 #optionsSettings label {
   color: white;
   border-radius: 50%;
   flex: 60%;
   font-size: 20px;
+}
+#optionsSettings button input{
+  position: absolute;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  bottom:3px;
+  right: 4px;
+  outline: 0;
 }
 #gridSize {
   width: 15%;
@@ -167,14 +186,16 @@ body {
   }
 }
 .grid {
-  border: solid 1px;
+  border: solid 1px rgb(61, 61, 61);
 }
-.gridW {
-  border: solid 1px white;
-}
+
 .transition {
   transition: background-color 0.5s;
 }
 #screen.background {
   background-color: black;
+}
+
+@media screen and (max-width:500px){
+  
 }
