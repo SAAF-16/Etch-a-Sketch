@@ -109,7 +109,7 @@ function newGrid() {
 }
 
 function createGrid() {
-    for (let i = 0; i < gridNumber ** 2; i++) {
+    for (let i = 0; i < gridNumber** 2; i++) {
         const block = document.createElement("div");
         block.classList.add("tiles");
         block.value = "0";
@@ -121,13 +121,13 @@ function createGrid() {
         
               focus.style.backgroundColor = `hsl(${randomNumberHSL()},${saturation}%,${90 - (block.value * 10)}%)`;
         }); */
-        gScreen.addEventListener("touchstart", function(e) {
+/*         gScreen.addEventListener("touchstart", function(e) {
             if (e.touches.length == 1) {
                 e.preventDefault();
             }
           });
         
-        
+         */
         gScreen.appendChild(block);
          
     }
