@@ -5,24 +5,35 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Etch-aSketch</title>
+    <title>Etch-a-Sketch</title>
 </head>
 <link rel="stylesheet" href="css/style.css">
 
 <body>
     <div id="container">
         <div id="info" class="sides">
-            <div id="title"></div>
-            <div id="creator"></div>
+            <div id="title">
+                <p><br> ETCH <br> A <br> SKETCH</p>
+            </div>
+            <div id="creator">developed by <a href="https://github.com/SAAF-16" target="_blank">SAAF</a></div>
         </div>
         <div id="game">
             <div id="screen"></div>
-            <div id="div-reset">animation here</div>
+            <div id="div-reset">
+                <div id="bReset">RESET</div>
+            </div>
         </div>
         <div id="options" class="sides">
-            <div id="optionsTitle"></div>
+            <div id="optionsTitle">
+                <p>SETTINGS</p>
+            </div>
             <div id="optionsSettings">
-                <input id="gridSize" type="number" min="2" max="100" value="8" step="1"></input>
+                <label for="gridSize">Grid Size</label><input id="gridSize" type="number" min="2" max="100" value="8"
+                    step="1" ></input>
+                <label for="bColor">Color</label><button id="bColor"></button>
+                <label for="bGrid">Grid</label><button id="bGrid"></button>
+                <label for="bTransition">Transition</label><button id="bTransition"></button>
+                <label for="bBackground">Background</label><button id="bBackground"></button>
             </div>
         </div>
     </div>
