@@ -5,23 +5,15 @@ let color = false;
 let squares;
 let lastTouch;
 let currentTouch;
-let drawing=true;
-let grid=false; //if grid is active
+let drawing = true;
+let grid = false; //if grid is active
+let transition = false;
 
-const notDrawing = () => {
-    drawing = false; //false
-}
-
-const isDrawing = ()=> {
-    drawing = true; //true
-}
 
 const gScreen = document.querySelector("#screen");
 
-
-
 const gridSize = document.querySelector("#gridSize");
-gridSize.addEventListener("input", delayedNewGrid()); //creates a new grid if the input changes, ( adding a delay to avoid useless operations while changing value)
+gridSize.addEventListener("input", delayedNewGrid()); //create a new grid on input change(delayed to avoid useless operations)
 
 /////////// settings buttons listeners //////////////////////////
 const bColor = document.querySelector("#bColor");
@@ -43,43 +35,20 @@ const bReset = document.querySelector("#bReset");
 bReset.addEventListener("click", resetGrid());
 bReset.addEventListener("animationend", endAnimation())
 
-const bDraw= document.querySelector("#bDraw");
-bDraw.addEventListener("click",toggleMouseDrawing());
+const bDraw = document.querySelector("#bDraw");
+bDraw.addEventListener("click", toggleMouseDrawing());
+const notDrawing = () => {
+    drawing = false;
+}
+const isDrawing = () => {
+    drawing = true;
+}
 /////////////////////////////////////////////////////////////////////
 createGrid();
 ////////////////////////  MOBILE SUPPORT   //////////////////////////
 
 gScreen.addEventListener("touchmove", touchChangeBackgroundColor());
 gScreen.addEventListener("touchstart", noScrollOnTouch());
-
-
-
-/////
-/////couldn't remove event listeners after added.. why ? implementing throug class
-/////
-
-
-
-function toggleMouseDrawing() {
-    return (e) => {
-        if (drawing) { //true
-            drawing = !drawing;  //false
-            squares.forEach((square) => {
-                square.addEventListener("mousedown",isDrawing); 
-                square.addEventListener("mouseup", notDrawing);
-            });
-        } else if (!drawing) {//false
-            squares.forEach((square) => {
-                square.removeEventListener("mousedown", isDrawing);
-                square.removeEventListener("mouseup", notDrawing);
-            });
-            drawing = !drawing;
-        }
-        e.target.classList.toggle("clicked");
-    };
-}
-
-
 
 ////////////////////////////////////////////////////////////////////
 
@@ -94,9 +63,8 @@ function delayedNewGrid() {
 function endAnimation() {
     return () => {
         bReset.classList.remove("resetBtnAnim");
-
         squares.forEach((square) => {
-            square.classList.remove("transition");
+            if (!transition) square.classList.remove("transition");
         });
     };
 }
@@ -119,13 +87,14 @@ function toggleTransition() {
             square.classList.toggle("transition");
         });
         e.target.classList.toggle("clicked");
+        transition = !transition;
     };
 }
 
 function toggleGrid() {
-    
+
     return (e) => {
-        grid= !grid;
+        grid = !grid;
         squares.forEach((square) => {
             square.classList.toggle("grid");
         });
@@ -147,6 +116,25 @@ function toggleSaturation() {
     };
 }
 
+function toggleMouseDrawing() {
+    return (e) => {
+        if (drawing) { //true
+            drawing = !drawing;  //false
+            squares.forEach((square) => {
+                square.addEventListener("mousedown", isDrawing);
+                square.addEventListener("mouseup", notDrawing);
+            });
+        } else if (!drawing) {//false
+            squares.forEach((square) => {
+                square.removeEventListener("mousedown", isDrawing);
+                square.removeEventListener("mouseup", notDrawing);
+            });
+            drawing = !drawing;
+        }
+        e.target.classList.toggle("clicked");
+    };
+}
+
 function newGrid() {
     return () => {
         gScreen.innerHTML = "";
@@ -161,18 +149,17 @@ function createGrid() {
         let block = document.createElement("div");
         block.classList.add("tiles");
         block.value = "0";
-        block.dataset.cellId = i;                   //gives an unique cell Id (touch support)
-        if(grid==true)block.classList.add("grid");  //if grid is active add grid
-        if(!drawing){                               //if draw is active adds listeners to the new grid
+        block.dataset.cellId = i;                       //gives an unique cell Id (touch support)
+        if (grid) block.classList.add("grid");  //if grid is active add grid
+        if (transition) block.classList.add("transition");    //if transition is acrive add transition
+        if (!drawing) {                                 //if draw is active adds listeners to the new grid
             block.addEventListener("mousedown", isDrawing);
             block.addEventListener("mouseup", notDrawing);
         }
         block.addEventListener("mouseover", changeBackgroundColor(block));
         gScreen.appendChild(block);
     }
-    bTransition.classList.remove("clicked");
     squares = document.querySelectorAll(".tiles");
-    
 }
 
 function noScrollOnTouch() {
@@ -208,7 +195,7 @@ function toggleBackground() {
 
 function changeBackgroundColor(block) {
     return () => {
-        if(!drawing)return;//false
+        if (!drawing) return;//false
         if (!color) {
             colors = `hsl(${randomNumberHSL()},${saturation}%,${90 - (block.value * 10)}%)`;
         } else { colors = bChoseColor.value; }
