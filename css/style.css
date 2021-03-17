@@ -64,6 +64,7 @@ body {
 }
 
 #screen {
+  user-select: none;
   --gridValue: 8;
   height: 85%;
   background-color: white;
@@ -136,21 +137,16 @@ body {
 #optionsSettings button:active::after {
   background-color: black;
 }
+.clicked{
+  background-color: grey;
+}
 #optionsSettings label {
   color: white;
   border-radius: 50%;
   flex: 60%;
   font-size: 20px;
 }
-/* #optionsSettings button input {
-  position: absolute;
-  border-radius: 50%;
-  height: 30px;
-  width: 30px;
-  bottom: 3px;
-  right: 4px;
-  outline: 0;
-} */
+
 #gridSize {
   width: 15%;
   height: 9%;
@@ -258,6 +254,18 @@ body {
     height: 20px;
     width: 20px;
   }
+  #div-reset {
+    height: 10px;
+    margin-bottom: 10px;
+    border: solid thin black;
+  }
+  #bReset {
+    height: 40px;
+    width: 40px;
+    bottom: 17px;
+    padding: 11px 0px;
+    font-size: 10px;
+}
   @keyframes resetAnim {
     50% {
       left: 250px;
