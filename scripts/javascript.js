@@ -3,6 +3,8 @@ let timeout;
 let saturation = 100;
 let color = false;
 let squares;
+let lastTouch;
+let currentTouch;
 
 const gScreen = document.querySelector("#screen");
 
@@ -113,24 +115,34 @@ function createGrid() {
         const block = document.createElement("div");
         block.classList.add("tiles");
         block.value = "0";
+        block.dataset.cellId=i; //gives an unique cell Id (touch support)
         block.addEventListener("mouseover", changeBackgroundColor(block));
-/*         block.addEventListener("touchmove" , (e)=>{
-        
-        let touch = e.touches[0];
-        let focus = document.elementFromPoint(touch.clientX, touch.clientY).querySelector("#screen");
-        
-              focus.style.backgroundColor = `hsl(${randomNumberHSL()},${saturation}%,${90 - (block.value * 10)}%)`;
-        }); */
-/*         gScreen.addEventListener("touchstart", function(e) {
-            if (e.touches.length == 1) {
-                e.preventDefault();
-            }
-          });
-        
-         */
-        gScreen.appendChild(block);
-         
+
+        gScreen.appendChild(block);  
     }
+    gScreen.addEventListener("touchmove" , (e)=>{
+
+        let touch = e.touches[0];
+        let focus = document.elementFromPoint(touch.clientX, touch.clientY);
+        
+        if(focus.className!="tiles")return false;   //if we're not touching a tile doesn't go on
+        lastTouch=focus.dataset.cellId
+        if(lastTouch!=currentTouch){        //the color is changed only if a different cell is touched
+            changeBackgroundColor(focus)();
+            currentTouch=lastTouch;
+        }
+        });
+        
+        gScreen.addEventListener("touchstart", function(e) {
+        if (e.touches.length == 1) {
+            e.preventDefault();
+        }
+      });
+
+
+
+
+
     squares = document.querySelectorAll(".tiles");
 }
 
