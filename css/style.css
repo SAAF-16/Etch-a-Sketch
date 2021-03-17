@@ -238,7 +238,7 @@ body {
     font-size: 10px;
   }
   #title p {
-    font-size: 22px;
+    font-size: 26px;
   }
   #creator {
     font-size: 12px;
@@ -269,7 +269,7 @@ body {
   }
   @keyframes resetAnim {
     50% {
-      left: 250px;
+      left: 300px;
     }
   }
 }
