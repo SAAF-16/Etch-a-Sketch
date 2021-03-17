@@ -1,4 +1,4 @@
-let gridNumber = 8; //inizial grid size (if changed, change also  --gridValue on CSS)
+let gridNumber = 40; //inizial grid size (if changed, change also  --gridValue on CSS)
 let timeout;
 let saturation = 100;
 let color = false;

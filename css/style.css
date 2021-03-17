@@ -65,7 +65,7 @@ body {
 
 #screen {
   user-select: none;
-  --gridValue: 8;
+  --gridValue: 40;
   height: 85%;
   background-color: white;
   border: solid rgb(160, 3, 3);
