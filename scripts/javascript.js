@@ -118,16 +118,17 @@ function toggleSaturation() {
 
 function toggleMouseDrawing() {
     return (e) => {
+        e.preventDefault()
         if (drawing) { //true
             drawing = !drawing;  //false
             squares.forEach((square) => {
-                square.addEventListener("mousedown", isDrawing);
-                square.addEventListener("mouseup", notDrawing);
+                window.addEventListener("mousedown", isDrawing);
+                window.addEventListener("mouseup", notDrawing);
             });
         } else if (!drawing) {//false
             squares.forEach((square) => {
-                square.removeEventListener("mousedown", isDrawing);
-                square.removeEventListener("mouseup", notDrawing);
+                window.removeEventListener("mousedown", isDrawing);
+                window.removeEventListener("mouseup", notDrawing);
             });
             drawing = !drawing;
         }
