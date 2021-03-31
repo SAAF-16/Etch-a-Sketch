@@ -180,7 +180,7 @@ body {
   }
 }
 .grid {
-  border: solid 1px rgb(61, 61, 61);
+  border: solid 0.5px rgba(88, 88, 88, 0.598);
 }
 
 .transition {
