@@ -4,5 +4,7 @@ This page is an example of a sketch board. i'ts possible to draw on the board (m
 ## Live Page
 https://saaf-16.github.io/Etch-a-Sketch/
 
+## Screenshots
+<img src="https://user-images.githubusercontent.com/79462238/128391703-9f3dca2b-2fd8-4f07-904d-2b3738aa34a4.png" width="900" height="500">
 
 Project from The Odin Project program (www.theodinproject.com)
